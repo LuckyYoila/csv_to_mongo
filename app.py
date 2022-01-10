@@ -6,17 +6,14 @@ db = MongoClient("localhost", 27017)
 cluster = db["csv_to_mongo"]
 dataCollection = cluster["data"]
 
-# set id counter
 i = 0
 
 # open file in read mode
 with open("test.csv", "r") as file:
 
-	# to read csv file as a dictionary
-	doc = csv.DictReader(file)
+	document = csv.DictReader(file)
 
-	for row in doc:
-		print(f"{row['Surname']}, {row['Name'], }")
+	for row in document:
 
 		# add a custom id to each data to insert
 		person = {
@@ -26,5 +23,5 @@ with open("test.csv", "r") as file:
 			"age": row['Age']
 		}
 
-		i = i+1
 		dataCollection.insert_one(person)
+		i = i+1
